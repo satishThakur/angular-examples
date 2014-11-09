@@ -1,0 +1,11 @@
+<ul class="pagination">
+    <li ng-class="{'disabled' : noPrev()}">
+        <a href="" ng-click="prev()">Prev</a>
+    </li>
+    <li ng-repeat="page in pages" ng-class="{'active': isActive(page)}">
+        <a href="" ng-click="setPage(page)">{{page}}</a>
+    </li>
+    <li ng-class="{'disabled' : noNext()}">
+        <a href="" ng-click="next()">Next</a>
+    </li>
+</ul>
