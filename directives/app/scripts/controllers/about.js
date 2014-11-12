@@ -51,6 +51,10 @@ angular.module('directivesApp')
             loadContent($scope.currentPage);
         };
 
+        $scope.callServer = function getData(tableState, tableController) {
+            console.log('call server with: ', tableState);
+        }
+
 
 
 
