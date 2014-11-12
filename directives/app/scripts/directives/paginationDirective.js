@@ -67,7 +67,7 @@
         };
     }
 
-    angular.module('app.directives').directive('pagination', paginationDirective);
+    angular.module('app.directives').directive('myPagination', paginationDirective);
 
 
 })();

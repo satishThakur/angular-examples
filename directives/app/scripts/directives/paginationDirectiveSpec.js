@@ -16,7 +16,7 @@ describe('pagination directive', function(){
         $scope.numPages = 5;
         $scope.currentPage = 2;
 
-        element = $compile('<pagination num-pages="numPages" current-page="currentPage" ng-model="currentPage1" page-changed="pageChanged(page)"></pagination>')($scope);
+        element = $compile('<my-pagination num-pages="numPages" current-page="currentPage" ng-model="currentPage1" page-changed="pageChanged(page)"></my-pagination>')($scope);
         $scope.$digest();
 
         lis = function(){
