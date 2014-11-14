@@ -30,8 +30,7 @@
 </div>
 
 <div class="row">
-    <my-pagination num-pages="numPages" current-page="currentPage"
-                ng-model="currentPage1" page-changed="pageChanged(page)"></my-pagination>
+    <tbl-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" items-per-page="itemsPerPage" num-pages="numPages" ng-change="pageChanged()"></tbl-pagination>
 </div>
 
 <button>Click Me!!</button>

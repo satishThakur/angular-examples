@@ -1,0 +1,17 @@
+<ul class="pagination">
+  <li ng-class="{disabled: noPrevious()}">
+  	<a href ng-click="selectPage(1)">First</a>
+  </li>
+  <li ng-class="{disabled: noPrevious()}">
+  	<a href ng-click="selectPage(page - 1)">Previous</a>
+  </li>
+  <li ng-repeat="page in pages track by $index" ng-class="{active: page.active}">
+  	<a href ng-click="selectPage(page.number)">{{page.text}}</a>
+  </li>
+  <li ng-class="{disabled: noNext()}">
+  	<a href ng-click="selectPage(page + 1)">Next</a>
+  </li>
+  <li ng-class="{disabled: noNext()}">
+  	<a href ng-click="selectPage(totalPages)">Last</a>
+  </li>
+</ul>

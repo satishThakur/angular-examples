@@ -16,7 +16,6 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.bootstrap',
     'smart-table',
     'app.directives'
   ])
@@ -31,6 +30,9 @@ angular
         controller: 'AboutCtrl'
       }).when('/contact', {
             templateUrl : 'views/contact.html'
+        }).when('/times',{
+          templateUrl : 'views/time.html',
+          controller : 'TimeCtrl'
         })
       .otherwise({
         redirectTo: '/'

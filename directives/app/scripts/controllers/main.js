@@ -16,22 +16,20 @@ angular.module('directivesApp')
         });
 
         $scope.currentPage = 1;
-        $scope.currentPage1 = 1;
-
-        $scope.$watch('currentPage', function(n,o){
-            console.log('currentPage changed from', o, 'to', n);
-            console.log('now currentPage is', $scope.currentPage);
-        });
+        $scope.itemsPerPage = 10;
+        $scope.totalItems = data.length;
+        $scope.maxSize = 5;
+        
 
         $scope.numPages = Math.ceil(data.length/itemsPerPage);
 
         $scope. items = [];
 
-        $scope.pageChanged = function(page){
-            console.log('page changed to ', page);
+        $scope.pageChanged = function(){
+            console.log('page changed to');
             console.log('current page is ',$scope.currentPage);
-            console.log('current page1 is ',$scope.currentPage1);
-            initDataForPage(page);
+            
+            initDataForPage($scope.currentPage);
         }
 
         var initDataForPage = function(page){
