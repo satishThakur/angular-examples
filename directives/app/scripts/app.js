@@ -16,8 +16,10 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ui.bootstrap',
     'smart-table',
-    'app.directives'
+    'app.directives',
+    'app.services'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -33,6 +35,9 @@ angular
         }).when('/times',{
           templateUrl : 'views/time.html',
           controller : 'TimeCtrl'
+        }).when('/pagination',{
+            templateUrl : 'views/defpgn.html',
+            controller : 'DefPgnCtrl'
         })
       .otherwise({
         redirectTo: '/'

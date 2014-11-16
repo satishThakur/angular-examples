@@ -2,86 +2,53 @@
 
 
 angular.module('directivesApp')
-  .controller('AboutCtrl', function ($scope,$timeout) {
-
-        var
-            nameList = ['Pierre', 'Pol', 'Jacques', 'Robert', 'Elisa'],
-            familyName = ['Dupont', 'Germain', 'Delcourt', 'bjip', 'Menez'];
-
-        function createRandomItem() {
-            var
-                firstName = nameList[Math.floor(Math.random() * 4)],
-                lastName = familyName[Math.floor(Math.random() * 4)],
-                age = Math.floor(Math.random() * 100),
-                email = firstName + lastName + '@whatever.com',
-                balance = Math.random() * 3000;
-
-            return{
-                firstName: firstName,
-                lastName: lastName,
-                birthDate: age,
-                email: email,
-                balance: balance
-            };
-        }
-
-        var data = [];
-        for (var j = 0; j < 200; j++) {
-            data.push(createRandomItem());
-        }
+  .controller('AboutCtrl', function ($scope,$timeout,Contacts) {
 
         $scope.rowCollection = [];
         $scope.displayedCollection = angular.copy($scope.rowCollection);
-
         $scope.maxSize = 5;
-        $scope.totalItems = data.length;
-        $scope.currentPage = 1;
         $scope.itemsPerPage = 4;
+        $scope.currentPage = 1;
 
 
-        var loadContent = function(page, currentData){
-            var initialIndex = (page - 1) * $scope.itemsPerPage;
-            $scope.rowCollection = currentData.slice(initialIndex, initialIndex + $scope.itemsPerPage);
-        }
+        $scope.pageChanged = function(tableState){
+            console.log('page changed', tableState);
+            tableState.pagination.size = $scope.itemsPerPage;
 
-        loadContent(1);
-
-        $scope.pageChanged = function() {
-            console.log('Page changed to: ' + $scope.currentPage);
-            loadContent($scope.currentPage, data);
+            Contacts.query(tableState).then(function(result){
+                console.log('got data', result);
+                $scope.totalItems = result.count;
+                $scope.rowCollection = result.data;
+            });
         };
 
+        var getInitTableState = function(){
+            var tableState = {};
+
+            tableState.pagination = {};
+            tableState.sort = {};
+            tableState.pagination.page = 1;
+            tableState.pagination.size = $scope.itemsPerPage;
+            return tableState;
+        };
+
+        Contacts.query(getInitTableState()).then(function(result){
+            console.log('got data', result);
+            $scope.totalItems = result.count;
+            $scope.rowCollection = result.data;
+        });
+
         $scope.callServer = function getData(tableState, tableController) {
-            console.log(tableState);
-            if(tableState.sort.predicate){
-                var sortOn = tableState.sort.predicate;
-                var isReverse = tableState.sort.reverse;
-                console.log('sort on', sortOn, 'reverse: ', isReverse);
+            console.log('call server', tableState);
+            tableState.pagination.page = $scope.currentPage;
+            tableState.pagination.size = $scope.itemsPerPage;
 
-                if(sortOn === 'firstName'){
-                    var dataCopy = angular.copy(data);
-                    dataCopy.sort(function(data1, data2){
-                        if(isReverse){
-                            return data2.firstName > data1.firstNamr;
-                        }else{
-                            return data1.firstName > data2.firstName;
-                        }    
-                    });
+            Contacts.query(tableState).then(function(result){
+                console.log('got data', result);
+                $scope.totalItems = result.count;
+                $scope.rowCollection = result.data;
+            });
 
-                    loadContent($scope.currentPage, data);
-
-
-                }else{
-
-                }
-
-            }else{
-                //load the default thing
-                loadContent($scope.currentPage, data);
-            }
         }
-
-
-
 
     });

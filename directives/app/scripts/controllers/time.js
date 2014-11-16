@@ -16,4 +16,9 @@ angular.module('directivesApp')
             $scope.notifyTime += 30;
         }
 
+        //just for logging no functionality!!
+        $scope.$watch('notifyTime',function(newVal, oldVal){
+            console.log('notify time changed from',oldVal, 'to', newVal);
+        });
+
   });

@@ -2,6 +2,7 @@
 	'use strict';
 
 	var paginationController = function($scope,$attrs, $parse){
+        console.log('controller called');
 		var self =this,
 		ngModelCtrl = { $setViewValue: angular.noop },
 		setNumPages = $attrs.numPages ? $parse($attrs.numPages).assign : angular.noop;
@@ -34,10 +35,12 @@
   		};
 
   		$scope.selectPage = function(page) {
-    		if ( $scope.page !== page && page > 0 && page <= $scope.totalPages) {
-      		ngModelCtrl.$setViewValue(page);
-      		ngModelCtrl.$render();
-    	};
+            if ($scope.page !== page && page > 0 && page <= $scope.totalPages) {
+                ngModelCtrl.$setViewValue(page);
+                console.log('calling render from selectPage call page:', page);
+                ngModelCtrl.$render();
+            }
+        }
 
     	$scope.noPrevious = function() {
     		return $scope.page === 1;
@@ -56,11 +59,13 @@
     		if ( $scope.page > value ) {
       			$scope.selectPage(value);
     		} else {
+                console.log('calling render from totalPage watch..');
       			ngModelCtrl.$render();
     		}
-  		});	  		
+  		});
 
-	};
+        console.log('controller ends...');
+
 	};
 
 	
@@ -69,28 +74,32 @@
 		return {
 
 			scope : {
-				totalItems: '='
+				totalItems: '=',
+                pageChanged : '&'
 			},
 
 			restrict : 'E',
 			replace : true,
 			controller : 'tablePgCtrl',
 			templateUrl : 'views/tablePagination.html',
-			require : ['ngModel', 'tblPagination'],
+			require : ['ngModel', 'tblPagination', '^stTable'],
 			link : function($scope,element, attrs, controllers){
+                console.log('linking starts...');
 		
 				var ngModelCtrl = controllers[0];
 				var paginationCtrl = controllers[1];
+                var stTableCtrl = controllers[2];
 
 				paginationCtrl.init(ngModelCtrl);
 
 				var maxSize;
 
 				if (attrs.maxSize) {
-		        	$scope.$parent.$watch($parse(attrs.maxSize), function(value) {
-		        		console.log('Maxsize', value);
+		        	$scope.$parent.$watch($parse(attrs.maxSize), function(value, old) {
+		        		console.log('Maxsize', value, old);
 		          		maxSize = parseInt(value, 10);
-		          		paginationCtrl.render();
+		          		console.log('calling render from maxsize..');
+                        paginationCtrl.render();
 		        	});
 		      	}else{
 		      		maxSize = 5;
@@ -138,15 +147,24 @@
 
 		      var originalRender = paginationCtrl.render;
 		      paginationCtrl.render = function() {
-		        originalRender();
-		        if ($scope.page > 0 && $scope.page <= $scope.totalPages) {
-		          $scope.pages = getPages($scope.page, $scope.totalPages);
-		        }
+                  console.log('directive render..',ngModelCtrl.$viewValue);
+                  console.trace();
+		          originalRender();
+		          if ($scope.page > 0 && $scope.page <= $scope.totalPages) {
+		              $scope.pages = getPages($scope.page, $scope.totalPages);
+		          }
+
+                  var tableState = stTableCtrl.tableState();
+                  tableState.pagination.page = $scope.page;
+                  $scope.pageChanged({tableState : tableState});
 		      };
+
+              console.log('linking finished...');
 
 			}
 
 		};
+
 	}
 
 

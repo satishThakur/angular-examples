@@ -12,12 +12,16 @@
 			templateUrl : 'views/times-directive.html',
 			controller : timeDurationCtrl,
 			require : 'ngModel',
+            scope : {
+
+            },
 			link : function(scope, element, attrs, ngModelCtrl){
 
 				var units = ['hours', 'mins', 'secs'];
 				var unitValus = [3600, 60, 1];
 
 				ngModelCtrl.$formatters.push(function(value){
+                    console.log('formatter called with', value);
 					var unit, value;
 					for(var i = 0; i < unitValus.length; i++){
 						if((value % unitValus[i]) === 0){
@@ -49,9 +53,10 @@
 
 				ngModelCtrl.$render = function(){
 					console.log('render called!!');
+                    console.trace();
 					if(!ngModelCtrl.$viewValue) ngModelCtrl.$viewValue = {unit : 'hours', value : 1};
 
-					console.log('viewvalue: ', ngModelCtrl.$viewValue);
+					console.log('render viewvalue: ', ngModelCtrl.$viewValue);
 					scope.unit = ngModelCtrl.$viewValue.unit;
 					scope.value = ngModelCtrl.$viewValue.value;
 				}

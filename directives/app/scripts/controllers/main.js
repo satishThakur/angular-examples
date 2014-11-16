@@ -8,7 +8,7 @@
  * Controller of the directivesApp
  */
 angular.module('directivesApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope,$timeout) {
         var itemsPerPage = 10;
 
         var data = _.map(_.range(100),function(num){
@@ -19,7 +19,9 @@ angular.module('directivesApp')
         $scope.itemsPerPage = 10;
         $scope.totalItems = data.length;
         $scope.maxSize = 5;
-        
+
+
+
 
         $scope.numPages = Math.ceil(data.length/itemsPerPage);
 
@@ -28,7 +30,7 @@ angular.module('directivesApp')
         $scope.pageChanged = function(){
             console.log('page changed to');
             console.log('current page is ',$scope.currentPage);
-            
+
             initDataForPage($scope.currentPage);
         }
 
