@@ -38,6 +38,9 @@ angular
         }).when('/pagination',{
             templateUrl : 'views/defpgn.html',
             controller : 'DefPgnCtrl'
+        }).when('/sttable', {
+            templateUrl : 'views/stTablePage.html',
+            controller : 'DefStTableCtrl'
         })
       .otherwise({
         redirectTo: '/'

@@ -1,0 +1,32 @@
+<p>Default st table implementation with client side sorting/paging/sorting</p>
+
+<table st-table="displayedCollection" st-safe-src="rowCollection" st-pipe="callServer" class="table table-striped">
+    <thead>
+    <tr>
+        <th st-sort="firstName">first name</th>
+        <th st-sort="lastName">last name</th>
+        <th st-sort="age">Age</th>
+        <th st-sort="balance">balance</th>
+        <th>email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="row in rowCollection">
+        <td>{{row.firstName}}</td>
+        <td>{{row.lastName}}</td>
+        <td>{{row.age}}</td>
+        <td>{{row.balance | currency}}</td>
+        <td><a ng-href="mailto:{{row.email}}">email</a></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="5" class="text-center">
+            <div st-pagination="" st-items-by-page="itemsPerPage" st-displayed-pages="3"></div>
+            
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+<button>Click Me!!</button>

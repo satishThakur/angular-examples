@@ -2,7 +2,7 @@
 
 
 angular.module('directivesApp')
-  .controller('AboutCtrl', function ($scope,$timeout,Contacts) {
+  .controller('AboutCtrl', function ($scope,Contacts) {
 
         $scope.rowCollection = [];
         $scope.displayedCollection = angular.copy($scope.rowCollection);
