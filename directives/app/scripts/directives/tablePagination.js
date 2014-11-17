@@ -74,8 +74,7 @@
 		return {
 
 			scope : {
-				totalItems: '=',
-                pageChanged : '&'
+				totalItems: '='
 			},
 
 			restrict : 'E',
@@ -156,10 +155,10 @@
 
                   var tableState = stTableCtrl.tableState();
                   tableState.pagination.page = $scope.page;
-                  $scope.pageChanged({tableState : tableState});
+                  tableState.pagination.size = paginationCtrl.itemsPerPage;
+                  //$scope.pageChanged({tableState : tableState});
+                  stTableCtrl.slice(($scope.page - 1) * paginationCtrl.itemsPerPage, paginationCtrl.itemsPerPage);
 		      };
-
-              console.log('linking finished...');
 
 			}
 

@@ -11,7 +11,7 @@
         return {
             restrict : 'E',
             compile : function(element, attributes){
-                element.addClass('btn btn-primary btn-lg');
+                element.addClass('btn btn-primary');
             }
 
         };

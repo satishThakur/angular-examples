@@ -10,18 +10,6 @@ angular.module('directivesApp')
         $scope.itemsPerPage = 4;
         $scope.currentPage = 1;
 
-
-        $scope.pageChanged = function(tableState){
-            console.log('page changed', tableState);
-            tableState.pagination.size = $scope.itemsPerPage;
-
-            Contacts.query(tableState).then(function(result){
-                console.log('got data', result);
-                $scope.totalItems = result.count;
-                $scope.rowCollection = result.data;
-            });
-        };
-
         var getInitTableState = function(){
             var tableState = {};
 

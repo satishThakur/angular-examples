@@ -3,6 +3,12 @@
 <table st-table="displayedCollection" st-safe-src="rowCollection" st-pipe="callServer" class="table table-striped">
     <thead>
     <tr>
+        <th>
+        <table-search predicate="'firstName'"></table-search>
+        </th>
+
+    </tr>
+    <tr>
         <th st-sort="firstName">first name</th>
         <th st-sort="lastName">last name</th>
         <th st-sort="age">Age</th>
@@ -23,10 +29,9 @@
     <tr>
         <td colspan="5" class="text-center">
             <tbl-pagination total-items="totalItems" ng-model="currentPage"
-                           max-size="maxSize" items-per-page="itemsPerPage" page-changed="pageChanged(tableState)"></tbl-pagination>
+                           max-size="maxSize" items-per-page="itemsPerPage"></tbl-pagination>
         </td>
     </tr>
     </tfoot>
 </table>
 
-<button>Click Me!!</button>
