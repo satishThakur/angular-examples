@@ -38,18 +38,35 @@
 
         var getData = function(tableState){
 
-            console.log('get data with', tableState);
+            //console.log('get data with', tableState);
+
+            var filteredCopy = [];
+
+            if(tableState.search && tableState.search.predicateObject && tableState.search.predicateObject.firstName){
+                var search  =tableState.search.predicateObject.firstName.toLowerCase();
+                console.log('doing filter on',search);
+                angular.forEach(data, function(elem){
+                    var firstName = elem.firstName.toLowerCase();
+                    console.log('comparing to',firstName);
+                    if(firstName.indexOf(search) > -1){
+                        console.log('matched', elem);
+                        filteredCopy.push(elem);
+                    }
+                });
+            }else{
+                filteredCopy = angular.copy(data);
+            }
 
             var result = {};
-            result.count = data.length;
-            var dataCopy = data;
+            result.count = filteredCopy.length;
+            var dataCopy = filteredCopy;
             if(tableState.sort.predicate){
                 var sortOn = tableState.sort.predicate;
                 var isReverse = tableState.sort.reverse;
-                console.log('sort on', sortOn, 'reverse: ', isReverse);
+                //console.log('sort on', sortOn, 'reverse: ', isReverse);
 
                 if(sortOn === 'firstName'){
-                    dataCopy = angular.copy(data);
+                    dataCopy = angular.copy(filteredCopy);
                     dataCopy.sort(function(data1, data2){
                         if(isReverse){
                             if(data2.firstName > data1.firstName){
@@ -70,9 +87,9 @@
                         }
                     });
 
-                    console.log('sorted data', dataCopy);
+                    //console.log('sorted data', dataCopy);
                 }else{
-                    console.log('sort not supported yet!!');
+                    //console.log('sort not supported yet!!');
 
                 }
 
@@ -84,7 +101,7 @@
             var startIndex = (pageNumber -1) * pageSize;
             var endIndex = startIndex + pageSize;
 
-            console.log('start index: ',startIndex, 'end index: ', endIndex);
+            //console.log('start index: ',startIndex, 'end index: ', endIndex);
 
             result.data = dataCopy.slice(startIndex, endIndex);
             return result;

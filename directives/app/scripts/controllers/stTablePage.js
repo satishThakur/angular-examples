@@ -31,8 +31,8 @@
         $scope.itemsPerPage = 4;
 
         $scope.callServer = function(tableState, ctrl){
-        	console.trace();
-        	console.log('call server called!!', tableState);
+        	//console.trace();
+        	//console.log('call server called!!', tableState);
         	tableState.pagination.numberOfPages = Math.ceil(data.length / $scope.itemsPerPage);
 
         	var page = tableState.pagination.start;

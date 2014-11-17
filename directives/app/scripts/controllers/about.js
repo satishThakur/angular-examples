@@ -8,7 +8,7 @@ angular.module('directivesApp')
         $scope.displayedCollection = angular.copy($scope.rowCollection);
         $scope.maxSize = 5;
         $scope.itemsPerPage = 4;
-        $scope.currentPage = 1;
+
 
         var getInitTableState = function(){
             var tableState = {};
@@ -21,14 +21,19 @@ angular.module('directivesApp')
         };
 
         Contacts.query(getInitTableState()).then(function(result){
-            console.log('got data', result);
+            //console.log('got data', result);
             $scope.totalItems = result.count;
             $scope.rowCollection = result.data;
         });
 
         $scope.callServer = function getData(tableState, tableController) {
             console.log('call server', tableState);
-            tableState.pagination.page = $scope.currentPage;
+
+            if(tableState.pagination.number) {
+                tableState.pagination.page = Math.floor(tableState.pagination.start / tableState.pagination.number) + 1;
+            }else{
+                tableState.pagination.page = 1;
+            }
             tableState.pagination.size = $scope.itemsPerPage;
 
             Contacts.query(tableState).then(function(result){

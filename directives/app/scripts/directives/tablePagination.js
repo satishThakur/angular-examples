@@ -3,8 +3,8 @@
 
 	var paginationController = function($scope,$attrs, $parse){
         console.log('controller called');
-		var self =this,
-		ngModelCtrl = { $setViewValue: angular.noop },
+		var self = this,
+            stTableCtrl = angular.noop,
 		setNumPages = $attrs.numPages ? $parse($attrs.numPages).assign : angular.noop;
 
 		
@@ -14,11 +14,16 @@
     		return Math.max(totalPages || 0, 1);
   		};
 
-  		this.init = function(ngModelCtrl_){
-  			ngModelCtrl = ngModelCtrl_;
-  			ngModelCtrl.$render = function() {
-      			self.render();
-    		};
+  		this.init = function(stTablectrl_){
+            stTableCtrl = stTablectrl_;
+
+            $scope.$watch(function () {
+                return stTableCtrl.tableState().pagination;
+            }, function(){
+                console.log('pagination changed watch!!');
+                self.render();
+            }, true);
+
     		if ($attrs.itemsPerPage) {
 	    	$scope.$parent.$watch($parse($attrs.itemsPerPage), function(value) {
 	        	self.itemsPerPage = parseInt(value, 10);
@@ -31,14 +36,17 @@
   		}
 
   		this.render = function() {
-    		$scope.page = parseInt(ngModelCtrl.$viewValue, 10) || 1;
+            var paginationState = stTableCtrl.tableState().pagination;
+            if(paginationState.number) {
+                $scope.page = Math.floor(paginationState.start / paginationState.number) + 1;
+            }else{
+                $scope.page = 1;
+            }
   		};
 
   		$scope.selectPage = function(page) {
             if ($scope.page !== page && page > 0 && page <= $scope.totalPages) {
-                ngModelCtrl.$setViewValue(page);
-                console.log('calling render from selectPage call page:', page);
-                ngModelCtrl.$render();
+                stTableCtrl.slice((page - 1) * self.itemsPerPage, self.itemsPerPage);
             }
         }
 
@@ -59,12 +67,9 @@
     		if ( $scope.page > value ) {
       			$scope.selectPage(value);
     		} else {
-                console.log('calling render from totalPage watch..');
-      			ngModelCtrl.$render();
+      			self.render();
     		}
   		});
-
-        console.log('controller ends...');
 
 	};
 
@@ -81,23 +86,22 @@
 			replace : true,
 			controller : 'tablePgCtrl',
 			templateUrl : 'views/tablePagination.html',
-			require : ['ngModel', 'tblPagination', '^stTable'],
-			link : function($scope,element, attrs, controllers){
+			require : ['tblPagination', '^stTable'],
+
+            link : function($scope,element, attrs, controllers){
                 console.log('linking starts...');
 		
-				var ngModelCtrl = controllers[0];
-				var paginationCtrl = controllers[1];
-                var stTableCtrl = controllers[2];
 
-				paginationCtrl.init(ngModelCtrl);
+				var paginationCtrl = controllers[0];
+                var stTableCtrl = controllers[1];
+
+				paginationCtrl.init(stTableCtrl);
 
 				var maxSize;
 
 				if (attrs.maxSize) {
 		        	$scope.$parent.$watch($parse(attrs.maxSize), function(value, old) {
-		        		console.log('Maxsize', value, old);
 		          		maxSize = parseInt(value, 10);
-		          		console.log('calling render from maxsize..');
                         paginationCtrl.render();
 		        	});
 		      	}else{
@@ -146,8 +150,7 @@
 
 		      var originalRender = paginationCtrl.render;
 		      paginationCtrl.render = function() {
-                  console.log('directive render..',ngModelCtrl.$viewValue);
-                  console.trace();
+
 		          originalRender();
 		          if ($scope.page > 0 && $scope.page <= $scope.totalPages) {
 		              $scope.pages = getPages($scope.page, $scope.totalPages);
@@ -156,10 +159,10 @@
                   var tableState = stTableCtrl.tableState();
                   tableState.pagination.page = $scope.page;
                   tableState.pagination.size = paginationCtrl.itemsPerPage;
-                  //$scope.pageChanged({tableState : tableState});
                   stTableCtrl.slice(($scope.page - 1) * paginationCtrl.itemsPerPage, paginationCtrl.itemsPerPage);
 		      };
 
+                stTableCtrl.slice(0, paginationCtrl.itemsPerPage);
 			}
 
 		};
