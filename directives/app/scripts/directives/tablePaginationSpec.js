@@ -31,8 +31,9 @@ describe('Pagination directive for St Table', function(){
         return element.find('li');
     }
 
-    beforeEach(module('app.directives'))
+    beforeEach(module('app.directives'));
     beforeEach(module('views/tablePagination.html'));
+    beforeEach(module('views/search.html'));
 
     beforeEach(module('smart-table', function ($controllerProvider) {
         $controllerProvider.register('stTableController', ControllerMock);
@@ -60,7 +61,7 @@ describe('Pagination directive for St Table', function(){
             spyOn(controllerMock, 'slice');
             element = $compile(tpl)(scope);
             scope.$digest();
-            console.log(element);
+
             expect(controllerMock.slice).toHaveBeenCalledWith(0,10);
 
         });
@@ -81,15 +82,15 @@ describe('Pagination directive for St Table', function(){
 
 
     describe('Number of pages', function(){
-       beforeEach(function(){
-           tpl = '<table st-table="displayedCollection"><tfoot><tr><td><tbl-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
-               '</tbl-pagination></td></tr></tfoot></table>';
-           scope.itemsPerPage = 10;
-           scope.maxSize = 5;
-           element = $compile(tpl)(scope);
-           scope.$digest();
+        beforeEach(function(){
+            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><tbl-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
+                '</tbl-pagination></td></tr></tfoot></table>';
+            scope.itemsPerPage = 10;
+            scope.maxSize = 5;
+            element = $compile(tpl)(scope);
+            scope.$digest();
 
-       });
+        });
 
         it('should have navigation and one page by default', function(){
             expect(lis().length).toBe(5);
@@ -197,24 +198,32 @@ describe('Pagination directive for St Table', function(){
 
     describe('page clicks', function(){
         beforeEach(function(){
-            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><tbl-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
+
+        });
+
+        it('should respond to the clicks', function(){
+
+            tpl = '<table st-table="displayedCollection">' +
+                '<thead><tr><th colspan="3"><table-search predicate="\'firstName\'"></table-search></th></tr></thead>' +
+                '<tfoot><tr><td><tbl-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
                 '</tbl-pagination></td></tr></tfoot></table>';
+
+
+            spyOn(controllerMock, 'slice');
+
             scope.itemsPerPage = 10;
             scope.maxSize = 5;
             scope.totalItems = 100;
             element = $compile(tpl)(scope);
             scope.$digest();
-        });
 
-        if('should respond to the clicks', function(){
-
-            angluar.element(lis().eq(4).children()[0]).triggerHandler('click');
+            angular.element(lis().eq(4).children()[0]).triggerHandler('click');
             scope.$digest();
-            expect(controllerMock.slice).toHaveBeenCalledWith(30,10);
+            expect(controllerMock.slice).toHaveBeenCalledWith(20,10);
 
-            angluar.element(lis().eq(6).children()[0]).triggerHandler('click');
+            angular.element(lis().eq(6).children()[0]).triggerHandler('click');
             scope.$digest();
-            expect(controllerMock.slice).toHaveBeenCalledWith(50,10);
+            expect(controllerMock.slice).toHaveBeenCalledWith(40,10);
         });
 
 

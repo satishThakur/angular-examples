@@ -16,7 +16,7 @@
 
         };
     };
-    var app = angular.module('app.directives',[]);
+    var app = angular.module('app.directives',['smart-table']);
     app.directive('button', buttonDirective);
 
 })();
