@@ -7,7 +7,7 @@ angular.module('directivesApp')
         $scope.rowCollection = [];
         $scope.displayedCollection = angular.copy($scope.rowCollection);
         $scope.maxSize = 5;
-        $scope.itemsPerPage = 4;
+        $scope.itemsPerPage = 2;
 
 
         $scope.callServer = function getData(tableState, tableController) {

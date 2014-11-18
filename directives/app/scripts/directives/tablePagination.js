@@ -103,6 +103,7 @@
 
 				if (attrs.maxSize) {
 		        	$scope.$parent.$watch($parse(attrs.maxSize), function(value, old) {
+                        console.log('MaxSize changes to',value, 'from', old);
 		          		maxSize = parseInt(value, 10);
                         paginationCtrl.render();
 		        	});
