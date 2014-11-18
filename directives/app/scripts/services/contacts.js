@@ -111,7 +111,7 @@
             var deferred = $q.defer();
             $timeout(function(){
                 deferred.resolve(getData(tableState));
-            },1000);
+            },500);
 
             return deferred.promise;
         }

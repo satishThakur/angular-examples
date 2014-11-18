@@ -4,8 +4,7 @@
 	var paginationController = function($scope,$attrs, $parse){
         console.log('controller called');
 		var self = this,
-            stTableCtrl = angular.noop,
-		setNumPages = $attrs.numPages ? $parse($attrs.numPages).assign : angular.noop;
+            stTableCtrl = angular.noop;
 
 		
 
@@ -25,26 +24,30 @@
             }, true);
 
     		if ($attrs.itemsPerPage) {
-	    	$scope.$parent.$watch($parse($attrs.itemsPerPage), function(value) {
-	        	self.itemsPerPage = parseInt(value, 10);
-	        	$scope.totalPages = self.calculateTotalPages();
-	      	});
-	    	} else {
-	      		this.itemsPerPage = 10;
-	      		$scope.totalPages = self.calculateTotalPages();
-	    	}
-  		}
+                $scope.$parent.$watch($parse($attrs.itemsPerPage), function(value) {
+                    self.itemsPerPage = parseInt(value, 10);
+                    $scope.totalPages = self.calculateTotalPages();
+                    console.log('itemsPerPage:', self.itemsPerPage, 'totalPages', $scope.totalPages);
+                });
+                } else {
+                    this.itemsPerPage = 10;
+                }
+  		    }
 
   		this.render = function() {
             var paginationState = stTableCtrl.tableState().pagination;
             if(paginationState.number) {
                 $scope.page = Math.floor(paginationState.start / paginationState.number) + 1;
             }else{
-                $scope.page = 1;
+                console.log('ItemsPerPage', self.itemsPerPage);
+                if(self.itemsPerPage) {
+                    stTableCtrl.slice(0, self.itemsPerPage);
+                }
             }
   		};
 
   		$scope.selectPage = function(page) {
+  			console.log('selectPage with:', page, 'current: ', $scope.page);
             if ($scope.page !== page && page > 0 && page <= $scope.totalPages) {
                 stTableCtrl.slice((page - 1) * self.itemsPerPage, self.itemsPerPage);
             }
@@ -62,8 +65,7 @@
   		});
 
   		$scope.$watch('totalPages', function(value) {
-    		setNumPages($scope.$parent, value); // Readonly variable
-
+  			console.log('total pages changed', value, 'page', $scope.page);
     		if ( $scope.page > value ) {
       			$scope.selectPage(value);
     		} else {
@@ -155,14 +157,7 @@
 		          if ($scope.page > 0 && $scope.page <= $scope.totalPages) {
 		              $scope.pages = getPages($scope.page, $scope.totalPages);
 		          }
-
-                  var tableState = stTableCtrl.tableState();
-                  tableState.pagination.page = $scope.page;
-                  tableState.pagination.size = paginationCtrl.itemsPerPage;
-                  stTableCtrl.slice(($scope.page - 1) * paginationCtrl.itemsPerPage, paginationCtrl.itemsPerPage);
 		      };
-
-                stTableCtrl.slice(0, paginationCtrl.itemsPerPage);
 			}
 
 		};

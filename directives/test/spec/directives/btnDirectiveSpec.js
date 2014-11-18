@@ -17,7 +17,6 @@ describe('Button directive', function(){
         var element = $compile(template)($rootScope);
         expect(element.hasClass('btn')).toBe(true);
         expect(element.hasClass('btn-primary')).toBe(true);
-        expect(element.hasClass('btn-lg')).toBe(true);
         expect(element.text()).toBe('Click me!!');
     });
 
