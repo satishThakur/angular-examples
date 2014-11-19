@@ -58,13 +58,12 @@ describe('Pagination directive for St Table', function(){
         it('should call search on controller when search is clicked', function(){
 
             tpl = '<table st-table="displayedCollection">' +
-                '<thead><tr><th colspan="3"><table-search predicate="\'firstName\'"></table-search></th></tr></thead>' +
+                '<thead><tr><th colspan="3"><ams-st-table-search predicate="\'firstName\'"></ams-st-table-search></th></tr></thead>' +
                 '</table>';
 
             spyOn(controllerMock, 'search');
             element = $compile(tpl)(scope);
             scope.$digest();
-            console.log(element);
 
             var searchElement = element.find('button').eq(0);
             angular.element(searchElement).triggerHandler('click');
@@ -77,13 +76,12 @@ describe('Pagination directive for St Table', function(){
         it('should not call search on controller when clear is clicked and there is no text', function(){
 
             tpl = '<table st-table="displayedCollection">' +
-                '<thead><tr><th colspan="3"><table-search predicate="\'firstName\'"></table-search></th></tr></thead>' +
+                '<thead><tr><th colspan="3"><ams-st-table-search predicate="\'firstName\'"></ams-st-table-search></th></tr></thead>' +
                 '</table>';
 
             spyOn(controllerMock, 'search');
             element = $compile(tpl)(scope);
             scope.$digest();
-            console.log(element);
 
             var clearElement = element.find('button').eq(1);
             angular.element(clearElement).triggerHandler('click');

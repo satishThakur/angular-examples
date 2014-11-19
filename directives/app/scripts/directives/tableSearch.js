@@ -27,14 +27,12 @@
                 });
 
                 scope.doSearch = function(){
-                    console.log('search for ', scope.search);
                     stTableCtrl.search(scope.search, scope.predicate);
                 }
 
                 scope.clear = function(){
                     if(scope.search !== ''){
                         scope.search = '';
-                        console.log('cleared search...');
                         stTableCtrl.search(scope.search, scope.predicate);
                     }
                 }
@@ -44,7 +42,6 @@
         };
     }
 
-
-    angular.module('app.directives').directive('tableSearch', searchDirective);
+    angular.module('app.directives').directive('amsStTableSearch', searchDirective);
 
 })();

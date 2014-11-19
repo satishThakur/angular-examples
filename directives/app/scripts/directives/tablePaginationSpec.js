@@ -57,7 +57,7 @@ describe('Pagination directive for St Table', function(){
         //5 and itemsPerPage should set to default 10. In this case once we get a watch callback from stTable
         // we should really invoke st table slice for display of page1.
         it('Should call the slice on controller to load the first page', function(){
-            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><tbl-pagination total-items="totalItems"></tbl-pagination></td></tr></tfoot></table>';
+            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><ams-st-table-pagination total-items="totalItems"></ams-st-table-pagination></td></tr></tfoot></table>';
             spyOn(controllerMock, 'slice');
             element = $compile(tpl)(scope);
             scope.$digest();
@@ -68,7 +68,7 @@ describe('Pagination directive for St Table', function(){
 
         it('Should consider the page size if we provide that as an attribute in the template', function(){
             scope.itemsPerPage = 3;
-            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><tbl-pagination items-per-page="itemsPerPage" total-items="totalItems"></tbl-pagination></td></tr></tfoot></table>';
+            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><ams-st-table-pagination items-per-page="itemsPerPage" total-items="totalItems"></ams-st-table-pagination></td></tr></tfoot></table>';
             spyOn(controllerMock, 'slice');
             element = $compile(tpl)(scope);
             scope.$digest();
@@ -83,8 +83,8 @@ describe('Pagination directive for St Table', function(){
 
     describe('Number of pages', function(){
         beforeEach(function(){
-            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><tbl-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
-                '</tbl-pagination></td></tr></tfoot></table>';
+            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><ams-st-table-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
+                '</ams-st-table-pagination></td></tr></tfoot></table>';
             scope.itemsPerPage = 10;
             scope.maxSize = 5;
             element = $compile(tpl)(scope);
@@ -154,8 +154,8 @@ describe('Pagination directive for St Table', function(){
     describe('StTable changed do propagate back', function(){
 
         beforeEach(function(){
-            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><tbl-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
-                '</tbl-pagination></td></tr></tfoot></table>';
+            tpl = '<table st-table="displayedCollection"><tfoot><tr><td><ams-st-table-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
+                '</ams-st-table-pagination></td></tr></tfoot></table>';
             scope.itemsPerPage = 10;
             scope.maxSize = 5;
             scope.totalItems = 100;
@@ -204,9 +204,9 @@ describe('Pagination directive for St Table', function(){
         it('should respond to the clicks', function(){
 
             tpl = '<table st-table="displayedCollection">' +
-                '<thead><tr><th colspan="3"><table-search predicate="\'firstName\'"></table-search></th></tr></thead>' +
-                '<tfoot><tr><td><tbl-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
-                '</tbl-pagination></td></tr></tfoot></table>';
+                '<thead><tr><th colspan="3"><ams-st-table-search predicate="\'firstName\'"></ams-st-table-search></th></tr></thead>' +
+                '<tfoot><tr><td><ams-st-table-pagination max-size="maxSize" items-per-page="itemsPerPage" total-items="totalItems">' +
+                '</ams-st-table-pagination></td></tr></tfoot></table>';
 
 
             spyOn(controllerMock, 'slice');

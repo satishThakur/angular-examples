@@ -2,7 +2,6 @@
 	'use strict';
 
 	var paginationController = function($scope,$attrs, $parse){
-        console.log('controller called');
 		var self = this,
             stTableCtrl = angular.noop;
 
@@ -19,7 +18,6 @@
             $scope.$watch(function () {
                 return stTableCtrl.tableState().pagination;
             }, function(){
-                console.log('pagination changed watch!!');
                 self.render();
             }, true);
 
@@ -27,7 +25,6 @@
                 $scope.$parent.$watch($parse($attrs.itemsPerPage), function(value) {
                     self.itemsPerPage = parseInt(value, 10);
                     $scope.totalPages = self.calculateTotalPages();
-                    console.log('itemsPerPage:', self.itemsPerPage, 'totalPages', $scope.totalPages);
                 });
                 } else {
                     this.itemsPerPage = 10;
@@ -39,7 +36,6 @@
             if(paginationState.number) {
                 $scope.page = Math.floor(paginationState.start / paginationState.number) + 1;
             }else{
-                console.log('ItemsPerPage', self.itemsPerPage);
                 if(self.itemsPerPage) {
                     stTableCtrl.slice(0, self.itemsPerPage);
                 }
@@ -47,7 +43,6 @@
   		};
 
   		$scope.selectPage = function(page) {
-  			console.log('selectPage with:', page, 'current: ', $scope.page);
             if ($scope.page !== page && page > 0 && page <= $scope.totalPages) {
                 stTableCtrl.slice((page - 1) * self.itemsPerPage, self.itemsPerPage);
             }
@@ -65,7 +60,6 @@
   		});
 
   		$scope.$watch('totalPages', function(value) {
-  			console.log('total pages changed', value, 'page', $scope.page);
     		if ( $scope.page > value ) {
       			$scope.selectPage(value);
     		} else {
@@ -88,11 +82,9 @@
 			replace : true,
 			controller : 'tablePgCtrl',
 			templateUrl : 'views/tablePagination.html',
-			require : ['tblPagination', '^stTable'],
+			require : ['amsStTablePagination', '^stTable'],
 
             link : function($scope,element, attrs, controllers){
-                console.log('linking starts...');
-		
 
 				var paginationCtrl = controllers[0];
                 var stTableCtrl = controllers[1];
@@ -103,7 +95,6 @@
 
 				if (attrs.maxSize) {
 		        	$scope.$parent.$watch($parse(attrs.maxSize), function(value, old) {
-                        console.log('MaxSize changes to',value, 'from', old);
 		          		maxSize = parseInt(value, 10);
                         paginationCtrl.render();
 		        	});
@@ -164,9 +155,7 @@
 		};
 
 	}
-
-
 	angular.module('app.directives').controller('tablePgCtrl', paginationController);
-	angular.module('app.directives').directive('tblPagination', paginationDirective);
+	angular.module('app.directives').directive('amsStTablePagination', paginationDirective);
 
 })();

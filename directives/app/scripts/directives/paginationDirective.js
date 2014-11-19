@@ -39,7 +39,6 @@
                     if(!scope.isActive(page)){
                         scope.currentPage = page;
                         ngModelCtrl.$setViewValue(page);
-                        console.log('Directive got page changed: ', page);
                         scope.pageChanged({page : page});
                     }
                 };
