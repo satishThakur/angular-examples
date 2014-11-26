@@ -5,3 +5,32 @@
 .st-sort-descent:before {
     content: '\25BC';
 }
+
+.css-form input.ng-invalid.ng-dirty {
+    border : solid 1px #FA787E;
+    background-color: #FA787E;
+}
+
+.accordian{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.accordian-group{
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+.accordian-group .title{
+    font: 1.5em;
+    cursor: pointer;
+    padding : 15px;
+    background: #f5f5f5;
+
+}
+
+.accordian-group .content{
+    padding: 15px;
+    border-top: 1px solid #ddd;
+
+}
