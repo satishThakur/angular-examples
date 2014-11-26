@@ -17,7 +17,7 @@
 
             angular.forEach(groupScopes, function(gs){
                if(gs !== scope){
-                   gs.setShow(false);
+                   gs.show = false;
                }
             });
         }
@@ -36,10 +36,6 @@
 
     var accordianGroupCtrl = function($scope){
         $scope.show = false;
-
-        $scope.setShow = function(value){
-            $scope.show = value;
-        };
     };
 
 
@@ -48,7 +44,7 @@
           restrict : 'E',
           replace : 'true',
           transclude : true,
-          templateUrl : 'scripts/directives/accordian/accordian.html',
+          templateUrl : 'views/accordian.html',
           scope : {
                 title : '@'
           },
