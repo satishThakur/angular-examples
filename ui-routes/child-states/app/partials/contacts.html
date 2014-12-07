@@ -1,0 +1,24 @@
+<div class="row">
+
+            <div class="col-sm-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li ng-class="{'active':allContacts}">
+                        <a ui-sref="contacts">All</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="contacts.favourite">Favourite</a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="contacts.recent">Recent</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-offset-3">
+                <ul class="list-unstyled">
+                    <li ng-repeat="contact in contacts">
+                        <a ui-sref="contacts.detail({id : contact.id})">{{contact.name}}</a>
+                    </li>
+                </ul>
+            </div>
+
+</div>
