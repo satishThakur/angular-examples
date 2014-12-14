@@ -11,6 +11,13 @@
         var groupScopes = [];
         this.addGroup = function(scope){
             groupScopes.push(scope);
+
+            scope.$on('$destroy',function(event){
+               var index = groupScopes.indexOf(scope);
+                if(index != -1){
+                    groupScopes.splice(index, 1);
+                }
+            });
         }
 
         this.clicked = function(scope){
@@ -21,6 +28,7 @@
                }
             });
         }
+
     };
     
 

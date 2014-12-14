@@ -1,0 +1,44 @@
+
+<div>
+    <form class="form-horizontal" ng-submit="createOperation()">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input id="name" class="form-control" ng-model="name">
+                </div>
+           </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="desc">Description</label>
+                    <input id="desc" class="form-control" ng-model="description">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="input">Input Parameters</label>
+                    <textarea id="input" class="form-control editor-pane" ng-model="input" rows="10"></textarea>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="behaviour">Behaviour</label>
+                    <textarea id="behaviour" class="form-control editor-pane" ng-model="behaviour" rows="10"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="output">Output</label>
+            <textarea id="output" class="form-control editor-pane" ng-model="output" rows="10"></textarea>
+        </div>
+
+
+
+        <button class="btn btn-primary" type="submit">Create</button>
+        <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+
+    </form>
+</div>

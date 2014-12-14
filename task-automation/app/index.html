@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../app/style/main.css">
+    <title></title>
+</head>
+<body>
+
+    <header class="navbar navbar-inner">
+        <nav class="container">
+            <div class="navbar-header">
+
+                <a class="navbar-brand" ui-sref="home">
+                    <span class="appTitle">Task Automation</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container" ui-view></div>
+
+    <div id="footer">
+        <div class="navbar navbar-fixed-bottom">
+            <div class="navbar-inner footer">
+                <div class="container">
+                    <footer>
+                        <div class="row">
+                            <div class="col-md-12">
+                                Created by <a href="https://github.com/satishThakur" target="_blank">Satish Thakur</a>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+
+    <!-- The custom library -->
+    <script src="../app/scripts/ams-lib/ams.js"></script>
+
+    <!-- The app -->
+    <script src="../app/scripts/app.js"></script>
+
+    <!-- controllers -->
+    <script src="../app/scripts/controllers/createController.js"></script>
+    <script src="../app/scripts/controllers/editController.js"></script>
+    <script src="../app/scripts/controllers/operationController.js"></script>
+
+    <!-- services -->
+    <script src="../app/scripts/services/operations.js"></script>
+    <script src="../app/scripts/services/launchFunctionService.js"></script>
+
+    <!-- Directives -->
+    <script src="../app/scripts/directives/dynamicFragment.js"></script>
+
+
+</body>
+</html>
