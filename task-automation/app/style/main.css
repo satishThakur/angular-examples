@@ -115,3 +115,7 @@ tr:first-child th{
 .editor-pane{
     border : 1px solid black;
 }
+
+.output-result {
+    margin-top: 20px;
+}

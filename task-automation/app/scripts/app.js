@@ -37,8 +37,8 @@
         });
     });
 
-    app.run(function($window,$timeout,$resource){
-        $window.amsInit($timeout, $resource);
+    app.run(function($window,$timeout,$resource, $q){
+        $window.amsInit($timeout, $resource, $q);
     });
 
 

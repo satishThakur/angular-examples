@@ -3,7 +3,7 @@
  */
 (function(){
     console.log('in lib...');
-    window.amsInit = function($timeout,$resource){
+    window.amsInit = function($timeout,$resource, $q){
         console.log('lib init...');
 
         var Lib = function(){
@@ -26,6 +26,7 @@
         };
 
         window.$ams = new Lib();
+        window.$ams.$q = $q;
     }
 
 })();

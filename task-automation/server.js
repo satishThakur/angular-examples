@@ -90,9 +90,32 @@ var operations = {
           '</thead><tbody><tr>' +
           '<td>{{result.value.name}}</td>' +
           '<td>{{result.value.Type}}</td>' +
-          '<td>{{result.value.Population}}</td>' +
+          '<td>{{result.value.Population}} million</td>' +
           '<td>{{result.value.Percentage}}</td>' +
           '<td>{{result.value[\'Sex Ratio\']}}</td></tr></tbody></table></div>'
+    },
+    'Multiple State Census' : {
+        description : 'Shows Census of states',
+        input : '<div class="row"><div class="form-group"><label for="states">Comma Separated States</label><input id="states" ng-model="states" class="form-control"></div>',
+        behaviour : 'var ams = this.$ams;var $q = ams.$q;var states= params.states.split(\',\');' +
+            'var promises = [];' +
+            'for(var i = 0; i < states.length;i ++){promises.push(ams.getStateStats(states[i]));}' +
+            'var aggregatePromise = $q.all(promises);' +
+            'aggregatePromise.then(function(stats){callback.call(context, stats)});',
+        output : '<div class="row" ng-show="resultDone">' +
+            '<table class="table table-striped table-bordered">' +
+            '<thead><tr><th>Name</th>' +
+            '<th>Type</th><th>' +
+            'Population</th>' +
+            '<th>% Population</th>' +
+            '<th>Sex Ratio</th></tr></thead>' +
+            '<tbody><tr ng-repeat="data in result.value">' +
+            '<td>{{data.name}}</td>' +
+            '<td>{{data.Type}}</td>' +
+            '<td>{{data.Population}} million</td>' +
+            '<td>{{data.Percentage}}</td>' +
+            '<td>{{data[\'Sex Ratio\']}}</td>' +
+            '</tr></tbody></table></div>'
     }
 };
 
@@ -152,7 +175,11 @@ app.delete('/app/operations/:name', function(req, res) {
 
 app.get('/app/stateStats/:state', function(req, res) {
     var state = req.params.state;
-    res.json(sensex[state]);
+    var data = sensex[state];
+    if(data){
+        data.name = state;
+    }
+    res.json(data);
 });
 
 app.all('/*', function(req, res) {

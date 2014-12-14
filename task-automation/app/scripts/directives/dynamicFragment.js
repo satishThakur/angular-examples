@@ -6,6 +6,7 @@
     var dynamicFragment = function($compile){
         return {
             restrict : 'A',
+            replace : true,
             link : function(scope, element, attrs){
 
                 scope.$watch(attrs.dynamicFragment, function(html){
