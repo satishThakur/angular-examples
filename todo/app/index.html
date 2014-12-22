@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todoApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo</title>
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="main.css" type="text/css" media="screen" charset="utf-8">
+
+</head>
+<body>
+<div data-ng-controller="todoController" class="container">
+
+    <h3>Tasks # {{totalTasks}}/{{completedTasks}}</h3>
+
+    <label for="new-task">Add Item</label>
+    <input type="text" id="new-task" ng-model="newTask">
+    <button ng-click="addTask()" ng-disabled="isAddDisabled()">Add</button>
+
+    <h3>TODO</h3>
+    <ul>
+        <li ng-repeat="task in tasks | filter: {isCompleted : false}">
+            <input type="checkbox" ng-model="task.isCompleted">
+            <input type="text" ng-model="task.name" ng-readonly="!task.isEditMode" ng-class="{noedit : !task.isEditMode}">
+            <button ng-click="editTask(task)">Edit</button>
+            <button ng-click="deleteTask(task.name)">Delete</button>
+
+        </li>
+    </ul>
+
+    <h3>Completed</h3>
+
+    <ul>
+        <li ng-repeat="task in tasks | filter: {isCompleted : true}">
+            <input type="checkbox" ng-model="task.isCompleted">
+            <input type="text" ng-model="task.name" ng-readonly="!task.isEditMode" ng-class="{noedit : !task.isEditMode,completed : true}">
+            <button ng-click="editTask(task)">Edit</button>
+            <button ng-click="deleteTask(task.name)">Delete</button>
+        </li>
+    </ul>
+
+
+</div>
+
+
+<script src="../bower_components/angular/angular.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
