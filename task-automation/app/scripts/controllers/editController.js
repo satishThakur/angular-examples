@@ -5,7 +5,7 @@
 
     'use strict';
 
-    var editController =  function($scope,Operations,$state, $stateParams){
+    var editController =  function($scope,Operations,$state, $stateParams,launchFuncService){
         $scope.input = '';
         $scope.behaviour = '';
         $scope.output = '';
@@ -23,6 +23,10 @@
         });
 
         $scope.createOperation = function(){
+            if(name === $scope.name){
+                var launchFuncKey = name + 'Launch';
+                launchFuncService.deleteLaunchFunc(launchFuncKey);
+            }
             Operations.save(
                 {
                     name : $scope.name,
