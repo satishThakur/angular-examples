@@ -1,0 +1,142 @@
+
+
+<div>
+    <header-title text="{{txtTitle}}">
+    </header-title>
+    <!--center-content-browse-override-->
+    <div class="row center-content">
+        <div class="col-xs-2 col-md-2 width-override-16per padding-top-25px width-mobile-100per width-tablet-100per">
+            <ul class="left-menu">
+                <li ng-class="{selected: classSelected.recent}"><a ui-sref="tasks.recent"
+                                                                   translate="module.tasks.browseTasks.menuLeft.myRecentTasks">My
+                    Recent Tasks</a></li>
+                <li ng-class="{selected: classSelected.favourite}"><a ui-sref="tasks.favourite"
+                                                                      translate="module.tasks.browseTasks.menuLeft.myFavoriteTasks">My
+                    Favourite Tasks</a></li>
+                <li ng-class="{selected: classSelected.popular}"><a ui-sref="tasks.popular"
+                                                                    translate="module.tasks.browseTasks.menuLeft.popularTasks">Popular
+                    Tasks</a></li>
+                <li ui-sref-active="selected"><a
+                        translate="module.tasks.browseTasks.menuLeft.relatedTo">Related
+                    To:</a><input type="text"
+                                  placeholder="{{'module.tasks.browseTasks.menuLeft.placeholderText' | translate}}"
+                                  class='left-menu-input'/></li>
+                <li ng-class="{selected: classSelected.all}"><a ui-sref="tasks"
+                                                                translate="module.tasks.browseTasks.contentRight.txtTitle">All
+                    Tasks</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-10 col-md-10 col-seperator-left padding-top-25px width-mobile-100per width-tablet-100per">
+            <div class="row home-grid-wrapper">
+                <div class="home-grid-header">
+                    <h3>Create Task</h3>
+                </div>
+
+                <tabset>
+                    <tab heading="General">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tab1">
+                                <form class="form-inline create-task-form-wrapper" role="form">
+                                    <div class="col-md-12 form-group form-group-margin">
+                                        <div class="col-md-2">
+                                            <label for="name">Name:<span class="mandatory">*</span></label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <input type="text" required class="form-control" id="name" placeholder="Enter Name" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group form-group-margin">
+                                        <div class="col-md-2">
+                                            <label for="description">Description:<span class="mandatory">*</span></label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <textarea maxlength="1024" cols="50" rows="2" placeholder="Enter Description" id="description" class="form-control" ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group form-group-margin">
+                                        <div class="col-md-2">
+                                            <label for="relatedTasks">Related Tasks:<span class="mandatory">*</span></label>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <select id='relatedTask' data-placeholder="Select Related Tasks" multiple class="chosen-select">
+                                                <option value="Reset Video Channel">Reset Video Channel</option>
+                                                <option value="Assign Video Channel">Assign Video Channel</option>
+                                                <option value="Assign Video Channel1">Assign Video Channel1</option>
+                                                <option value="Assign Video Channel2">Assign Video Channel2</option>
+                                                <option value="Reset Video Channel1">Reset Video Channel1</option>
+                                                <option value="Reset Video Channel4">Reset Video Channel4</option>
+                                                <option value="Reset Video Channel3">Reset Video Channel3</option>
+                                                <option value="Reset Video Channel7">Reset Video Channel7</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 form-group form-group-margin">
+                                        <div class="col-md-2">
+                                            <label for="selectedFunctions">Security Functions:<span class="mandatory">*</span></label>
+                                        </div>
+                                        <div class="col-md-10" >
+                                            <select id='securityFunctions' data-placeholder="Select Security Functions" multiple class="chosen-select">
+                                                <option value="Security Function 1">Security Function 1</option>
+                                                <option value="Security Function 2">Security Function 2</option>
+                                                <option value="Security Function 3">Security Function 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 form-group form-group-margin">
+                                        <div class="col-md-2">
+                                            <label for="selectedFunctions">Visibility:<span class="mandatory">*</span></label>
+                                        </div>
+                                        <div class="col-md-10" >
+                                            <input type="radio" name='visibility' id='visibilityPrivate' /><label class="radio-task-label">Private</label>
+                                            <input type="radio" name='visibility' id='visibilityPublic'/><label class="radio-task-label">Public</label>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab heading="Behaviour">
+
+                            <div class="row">
+                                <input type='button' value='Try It' onClick='previewTask()' class='btn btn-primary pull-right'/>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="input-params">Input Parameters</label>
+                                    <textarea rows="20" id="input-params"></textarea>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="behaviour">Behaviour</label>
+                                    <textarea  rows="20" id="behaviour"></textarea>
+                                    <div ui-codemirror></div>
+                                </div>
+                            </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label for="output">Output</label>
+                                <textarea rows="20" id="output"></textarea>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="result">Result</label>
+                                <textarea  rows="20" id="result"></textarea>
+                                <div ui-codemirror></div>
+                            </div>
+                        </div>
+
+                    </tab>
+                </tabset>
+
+                <div class="col-md-12 form-group form-group-margin btn-orange-wrapper-margin">
+                    <input id='createTaskButton' type="submit" value="Create" onClick="validateTaskForm();" class="btn btn-primary-orange pull-right" />
+                    <input id='cancelFormButtonScreen3' type="button" value="Cancel" class="btn btn-default pull-right">
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    </div>
