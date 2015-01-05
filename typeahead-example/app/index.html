@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+</head>
+<body ng-controller="appCtrl">
+    <div class="container">
+
+    <h3>Select the state</h3>
+    <input placeholder="State Name" ng-model="state" typeahead="state for state in states | filter : $viewValue">
+
+    <div>
+        <h4>{{state}}</h4>
+    </div>
+    </div>
+
+<script src="../bower_components/angular/angular.js"></script>
+<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+
+<script src="app.js"></script>
+</body>
+</html>
