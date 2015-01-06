@@ -73,7 +73,7 @@ var operations = {
   'State Census' : {
       description : 'Shows Census of state',
       input : '<div class="row"><div class="form-group"><label for="state">State</label>' +
-          '<input id="state" ng-model="state" class="form-control"></div>',
+          '<state ng-model="state"></state></div>',
 
       behaviour : 'var ams = this.$ams;' +
           'var state = params.state;' +
@@ -134,6 +134,25 @@ app.get('/app/operations/:name', function(req, res) {
 app.get('/app/operations', function(req, res) {
     res.json(operations);
     //res.json(500, { error: 'An error has occurred!' });
+});
+
+app.get('/app/states',function(req,res){
+  var queryString = req.query.search;
+  if(!queryString){
+    queryString = '';
+  }else{
+    queryString = queryString.toUpperCase();
+  }
+
+  var states = [];
+  for(var state in sensex){
+    var sateTemp = state.toUpperCase();
+    if(sateTemp.indexOf(queryString) !== -1){
+      states.push(state);
+    }
+  }
+  res.json(states);
+
 });
 
 
