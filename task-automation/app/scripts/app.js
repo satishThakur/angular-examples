@@ -9,17 +9,27 @@
         'ui.bootstrap',
         'app.services',
         'app.directives',
-        'app.controllers'
+        'app.controllers',
+        'angular-responsive'
     ]);
 
-    app.config(function($urlRouterProvider, $stateProvider){
+    app.config(function($urlRouterProvider, $stateProvider,responsiveHelperProvider){
 
+        console.log('responsiveHelperProvider',responsiveHelperProvider);
+
+        var device = 'desktop';
+        var responsiveHelper = responsiveHelperProvider.$get();
+        console.log('responsiveHelper',responsiveHelper);
+        if(responsiveHelper.isXs()){
+            device = 'mobile';
+        }
+        console.log('device', device);
         $urlRouterProvider.otherwise('/');
 
         $stateProvider.state('home',{
             url : '/',
             controller : 'MainController',
-            templateUrl : '../app/partials/main.html'
+            templateUrl : '../app/partials/' + device + '-main.html'
 
         }).state('operation',{
             url : '/operation/:name',
