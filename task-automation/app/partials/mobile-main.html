@@ -1,0 +1,7 @@
+
+    <div class="row">
+        <div class="col-sm-12" ng-repeat="(operName, OperData) in operations">
+            <div><a ui-sref="operation({name : operName})">{{operName}}</a></div>
+            <div>{{OperData.description}}</div>
+        </div>
+    </div>
